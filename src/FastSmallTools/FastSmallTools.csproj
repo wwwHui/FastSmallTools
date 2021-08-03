@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageEdit\ImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageEdit\ImageForm.Designer.cs">
+      <DependentUpon>ImageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\CheckCode.cs" />
     <Compile Include="Tools\ImageTool.cs" />
     <Compile Include="MainForm.cs">
@@ -70,6 +76,9 @@
     <Compile Include="Win32API\MouseSimulation.cs" />
     <Compile Include="Win32API\MouseHook.cs" />
     <Compile Include="Win32API\User32.cs" />
+    <EmbeddedResource Include="ImageEdit\ImageForm.resx">
+      <DependentUpon>ImageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,7 +90,6 @@
     <EmbeddedResource Include="TransparentForm.resx">
       <DependentUpon>TransparentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <Fakes Include="Fakes\OpenCvSharp.fakes" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -10,6 +10,7 @@ using Win32API;
 //using FastSmallTools.test;
 using FastSmallTools.Tools;
 using FastSmallTools.Win32API;
+using FastSmallTools.ImageEdit;
 
 
 namespace FastSmallTools
@@ -329,7 +330,6 @@ namespace FastSmallTools
 
         #endregion // 滚动截图
 
-
         #region 功能按钮函数-设置
         /// <summary>
         /// 设置按钮处理
@@ -432,6 +432,12 @@ namespace FastSmallTools
                 //String filename = DateTime.Now.ToString("G"); //  DateTime.Now.ToString("yyyy-M-d H:mm:ss");
                 String filename = autoSaveCapture + DateTime.Now.ToString("yyyyMd-Hmmss") + ".png";
                 bmp.Save(filename, ImageFormat.Png);
+            }
+
+            if (openEdit)  // 打开编辑窗口
+            {
+                ImageEdit.ImageForm editFrom = new ImageForm(bmp);
+                editFrom.Show();
             }
             
             
