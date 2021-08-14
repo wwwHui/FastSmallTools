@@ -114,6 +114,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="res\activeWindow.png" />
+    <None Include="res\add.png" />
     <Content Include="res\autoSave.png" />
     <Content Include="res\close.png" />
     <Content Include="res\edit.png" />

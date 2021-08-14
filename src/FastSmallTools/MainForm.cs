@@ -47,6 +47,8 @@ namespace FastSmallTools
         private bool moving = false;
         private Point pointRecord = new Point();  //拖动窗口时记录相对位置
 
+        private ImageForm editFrom = null;
+
 
         #endregion // 变量定义
 
@@ -199,7 +201,7 @@ namespace FastSmallTools
                     // 没有截图
 
                 }
-                this.Visible = true;
+                
                 transparentForm.Close();
 
 
@@ -436,21 +438,50 @@ namespace FastSmallTools
 
             if (openEdit)  // 打开编辑窗口
             {
-                ImageEdit.ImageForm editFrom = new ImageForm(bmp);
+                this.Visible = false;
+                if (editFrom == null)
+                {
+                    editFrom = new ImageForm(bmp);
+                    editFrom.StateChanged += new ImageForm.StateChangedEventHandler(editFromStateChanged);
+                }
+                else
+                {
+                    editFrom.addNewPicture(bmp);
+                }
+                
                 editFrom.Show();
+            }
+            else
+            {
+                this.Visible = true;
             }
             
             
         }
-        #endregion
 
-        #region 鼠标事件-全局鼠标
-        /// <summary>
-        /// 全局鼠标-单击
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mh_MouseDownEvent(object sender, MouseEventArgs e)
+        public void editFromStateChanged(object sender, int flag)
+        {
+            switch (flag)
+            {
+                case 0:  // 编辑窗口被关闭  -> 关闭主窗口
+                    this.Close();
+                    break;
+                case 1:  // 编辑窗口中要求新增截图  -> 显示主窗口
+                    this.Visible = true;
+                    break;
+
+            }
+        }
+
+    #endregion
+
+    #region 鼠标事件-全局鼠标
+    /// <summary>
+    /// 全局鼠标-单击
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void mh_MouseDownEvent(object sender, MouseEventArgs e)
         {
             if(state == State.SelectWindow)
             {
