@@ -39,11 +39,12 @@ namespace FastSmallTools.ImageEdit
             // 
             // panelMenu
             // 
+            this.panelMenu.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panelMenu.Controls.Add(this.buttonAdd);
             this.panelMenu.Controls.Add(this.pictureBoxOption);
             this.panelMenu.Location = new System.Drawing.Point(1, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(799, 79);
+            this.panelMenu.Size = new System.Drawing.Size(799, 80);
             this.panelMenu.TabIndex = 0;
             // 
             // buttonAdd
@@ -64,10 +65,11 @@ namespace FastSmallTools.ImageEdit
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Tag = "新增截图";
             this.buttonAdd.UseVisualStyleBackColor = false;
-            this.buttonAdd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAdd_MouseDown);
+            this.buttonAdd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonAdd_MouseDown);
             // 
             // pictureBoxOption
             // 
+            this.pictureBoxOption.BackColor = System.Drawing.SystemColors.Highlight;
             this.pictureBoxOption.Location = new System.Drawing.Point(0, 32);
             this.pictureBoxOption.Name = "pictureBoxOption";
             this.pictureBoxOption.Size = new System.Drawing.Size(732, 47);
@@ -76,7 +78,7 @@ namespace FastSmallTools.ImageEdit
             // 
             // tabControlPicture
             // 
-            this.tabControlPicture.Location = new System.Drawing.Point(1, 85);
+            this.tabControlPicture.Location = new System.Drawing.Point(0, 85);
             this.tabControlPicture.Name = "tabControlPicture";
             this.tabControlPicture.SelectedIndex = 0;
             this.tabControlPicture.Size = new System.Drawing.Size(799, 364);
@@ -92,6 +94,7 @@ namespace FastSmallTools.ImageEdit
             this.Name = "ImageForm";
             this.Text = "图片编辑器";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ImageForm_FormClosed);
+            this.Resize += new System.EventHandler(this.ImageForm_Resize);
             this.panelMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOption)).EndInit();
             this.ResumeLayout(false);

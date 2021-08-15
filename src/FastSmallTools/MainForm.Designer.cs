@@ -378,6 +378,7 @@ namespace FastSmallTools
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "FastSmallTool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.panelFunction.ResumeLayout(false);
             this.ResumeLayout(false);
 

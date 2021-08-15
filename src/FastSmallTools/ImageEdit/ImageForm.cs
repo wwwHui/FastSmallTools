@@ -26,18 +26,15 @@ namespace FastSmallTools.ImageEdit
         public ImageForm(Bitmap bmp, String name = "name")
         {
             InitializeComponent();
-
-            toolTipInit();
-
-            addNewPicture(bmp, name);
-
-
-
-
+            //this.WindowState = FormWindowState.Maximized;  //使窗口启动时直接最大化
+            ToolTipInit();
+            AddNewPicture(bmp, name);
            
         }
-
-        public void toolTipInit()
+        /// <summary>
+        /// 提示初始化
+        /// </summary>
+        public void ToolTipInit()
         {
 
             toolTip.AutoPopDelay = 5000;
@@ -45,23 +42,25 @@ namespace FastSmallTools.ImageEdit
             toolTip.ReshowDelay = 200;
 
             toolTip.ShowAlways = true;
-
             toolTip.SetToolTip(this.buttonAdd, this.buttonAdd.Tag.ToString());
 
         }
-
-        public void addNewPicture(Bitmap bmp, String name = "name")
+        /// <summary>
+        /// 新增图片展示和编辑框
+        /// </summary>
+        /// <param name="bmp">新增的图片</param>
+        /// <param name="name">图片名或标识</param>
+        public void AddNewPicture(Bitmap bmp, String name = "name")
         {
-            TabPage tabPage = new TabPage();
-            Panel panel = new Panel();
             PictureBox pictureBox = new PictureBox();
-
+            Panel panel = new Panel();
+            TabPage tabPage = new TabPage();
+            
             pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox.Image = bmp;
-            Console.WriteLine(pictureBox.Size.ToString());
 
             panel.AutoScroll = true;
-            
+            //panel.AutoScrollMinSize = pictureBox.Size;
             panel.Dock = DockStyle.Fill;  // 大小随父容器变化
 
             if (name.Equals("name"))
@@ -70,17 +69,78 @@ namespace FastSmallTools.ImageEdit
             }
             tabPage.Name = name;
             tabPage.Text = name;
+            tabPage.Dock = DockStyle.Fill;  // 大小随父容器变化
+
 
             panel.Controls.Add(pictureBox);
             tabPage.Controls.Add(panel);
             this.tabControlPicture.Controls.Add(tabPage);
+            this.tabControlPicture.SelectedTab = tabPage;
+
+            //Console.WriteLine(pictureBox.Size.ToString() + "   " + panel.Size.ToString() + "   " + tabPage.Size.ToString() + "   " + this.tabControlPicture.Size.ToString());
+
+            pictureBox.Left = (panel.Width - pictureBox.Width) / 2;
+            //pictureBox.Location.X = (panel.Width - pictureBox.Width) / 2;
+
+            //pictureBox.BackColor = System.Drawing.Color.Red;
+            //panel.BackColor = System.Drawing.Color.Yellow;
 
 
         }
         #endregion // 初始化
 
+        #region 窗体事件
+        /// <summary>
+        /// 窗体关闭事件 - 给主窗口传递关闭信号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImageForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            StateChanged(this, 0);
+        }
 
-        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
+        private void ImageForm_Resize(object sender, EventArgs e)
+        {
+            int width = this.Width - 20;
+            int height = this.Height - 20;  
+            // panelMenu  位置 和 大小
+            //Console.WriteLine("edit from size " + width.ToString() + ", " + height.ToString());
+            this.panelMenu.Location = new Point(5, 0);
+            this.panelMenu.Size = new Size(width, 80);
+            //Console.WriteLine("panelMenu size:" + this.panelMenu.Size.ToString());
+
+            // tabControlPicture 位置 和 大小
+            this.tabControlPicture.Location = new Point(5, 85);
+            this.tabControlPicture.Size = new Size(width, height - 100);
+            //Console.WriteLine("panelMenu size:" + this.tabControlPicture.Size.ToString());
+
+            // tabControlPicture 中的控件  位置 和 大小
+            foreach (Control control in this.tabControlPicture.Controls)
+            {
+                try
+                {
+                    TabPage tabPage = (TabPage)control;
+                    Panel panel = (Panel)(tabPage.Controls[0]);
+                    PictureBox pictureBox = (PictureBox)(panel.Controls[0]);
+                    pictureBox.Left = (panel.Width - pictureBox.Width) / 2;
+                }
+                catch
+                {
+
+                }
+                
+            }
+        }
+        #endregion // 窗体事件
+
+        #region 按钮点击事件
+        /// <summary>
+        /// 按钮点击事件 - 新增截图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonAdd_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)  // 单击鼠标左键
             {
@@ -89,9 +149,8 @@ namespace FastSmallTools.ImageEdit
             }
         }
 
-        private void ImageForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            StateChanged(this, 0);
-        }
+
+        #endregion // 按钮点击事件
+
     }
 }

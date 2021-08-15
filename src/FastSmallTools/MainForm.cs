@@ -104,7 +104,6 @@ namespace FastSmallTools
 
         #endregion // 初始化
 
-
         #region 功能按钮函数-打开文件
         private void buttonOpenFile_MouseDown(object sender, MouseEventArgs e)
         {
@@ -446,7 +445,7 @@ namespace FastSmallTools
                 }
                 else
                 {
-                    editFrom.addNewPicture(bmp);
+                    editFrom.AddNewPicture(bmp);
                 }
                 
                 editFrom.Show();
@@ -473,42 +472,42 @@ namespace FastSmallTools
             }
         }
 
-    #endregion
+        #endregion
 
-    #region 鼠标事件-全局鼠标
-    /// <summary>
-    /// 全局鼠标-单击
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void mh_MouseDownEvent(object sender, MouseEventArgs e)
-        {
-            if(state == State.SelectWindow)
+        #region 鼠标事件-全局鼠标
+        /// <summary>
+        /// 全局鼠标-单击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mh_MouseDownEvent(object sender, MouseEventArgs e)
             {
-                if (e.Button == MouseButtons.Left)
+                if(state == State.SelectWindow)
                 {
-                    User32.RefreshFullScreen();
-                    System.Threading.Thread.Sleep(DELAY_TIME);
-                    Rectangle rect = new Rectangle(0, 0, 0, 0);
-                    User32.GetWindowRectangle(hWnd, ref rect);
-                    Bitmap bmp = captureBitmap(rect);
-                    afterCapture(bmp);
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        User32.RefreshFullScreen();
+                        System.Threading.Thread.Sleep(DELAY_TIME);
+                        Rectangle rect = new Rectangle(0, 0, 0, 0);
+                        User32.GetWindowRectangle(hWnd, ref rect);
+                        Bitmap bmp = captureBitmap(rect);
+                        afterCapture(bmp);
                     
+                    }
+                    state = State.None;
+                    this.Visible = true;
+                    mh.UnHook();
+                    mh.MouseDownEvent -= mh_MouseDownEvent;
+                    mh.MouseUpEvent -= mh_MouseUpEvent;
+                    mh.MouseMoveEvent -= mh_MouseMoveEvent;
+                    MainForm.TxtWrite("mouse.txt", "end **********\r\n");
+                    //wh.UnHook();
                 }
-                state = State.None;
-                this.Visible = true;
-                mh.UnHook();
-                mh.MouseDownEvent -= mh_MouseDownEvent;
-                mh.MouseUpEvent -= mh_MouseUpEvent;
-                mh.MouseMoveEvent -= mh_MouseMoveEvent;
-                MainForm.TxtWrite("mouse.txt", "end **********\r\n");
-                //wh.UnHook();
-            }
 
-            if (e.Button == MouseButtons.Right)
-            {
+                if (e.Button == MouseButtons.Right)
+                {
+                }
             }
-        }
         /// <summary>
         /// 全局鼠标-移动
         /// </summary>
@@ -612,7 +611,7 @@ namespace FastSmallTools
             {
                 this.Visible = !this.Visible;
             }
-            else if (e.Button == MouseButtons.Right)  // 单击鼠标右键键
+            else if (e.Button == MouseButtons.Right)  // 单击鼠标右键
             {
 
             }
@@ -637,6 +636,15 @@ namespace FastSmallTools
              * 另外若有托管线程（非主线程），也无法干净地退出。
              */
             this.Close();   
+        }
+        /// <summary>
+        /// 窗口关闭事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.notifyIcon.Visible = false;  // 关闭托盘图标，不然打开托盘才会刷新消失
         }
 
         #endregion // 窗口-最小化和关闭
