@@ -32,7 +32,7 @@ namespace FastSmallTools.ImageEdit
             this.panelMenu = new System.Windows.Forms.Panel();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.pictureBoxOption = new System.Windows.Forms.PictureBox();
-            this.tabControlPicture = new System.Windows.Forms.TabControl();
+            this.tabControlPicture = new FastSmallTools.CustomControl.CustomTabControl();
             this.panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOption)).BeginInit();
             this.SuspendLayout();

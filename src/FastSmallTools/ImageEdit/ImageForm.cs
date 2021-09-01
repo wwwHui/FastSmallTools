@@ -67,6 +67,10 @@ namespace FastSmallTools.ImageEdit
             {
                 name = DateTime.Now.ToString("yyyyMMdd-hhmmssffff");
             }
+            if(!name.EndsWith("  "))
+            {
+                name = name + "  ";
+            }
             tabPage.Name = name;
             tabPage.Text = name;
             tabPage.Dock = DockStyle.Fill;  // 大小随父容器变化
