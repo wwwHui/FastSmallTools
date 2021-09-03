@@ -30,7 +30,6 @@ namespace FastSmallTools.ImageEdit
         private void InitializeComponent()
         {
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.buttonAdd = new System.Windows.Forms.Button();
             this.pictureBoxOption = new System.Windows.Forms.PictureBox();
             this.tabControlPicture = new FastSmallTools.CustomControl.CustomTabControl();
             this.panelMenu.SuspendLayout();
@@ -40,44 +39,27 @@ namespace FastSmallTools.ImageEdit
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panelMenu.Controls.Add(this.buttonAdd);
             this.panelMenu.Controls.Add(this.pictureBoxOption);
             this.panelMenu.Location = new System.Drawing.Point(1, 0);
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(799, 80);
             this.panelMenu.TabIndex = 0;
             // 
-            // buttonAdd
-            // 
-            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.buttonAdd.BackgroundImage = global::FastSmallTools.Properties.Resources.add;
-            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAdd.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.buttonAdd.FlatAppearance.BorderSize = 0;
-            this.buttonAdd.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.buttonAdd.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAdd.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonAdd.Location = new System.Drawing.Point(738, 12);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(45, 45);
-            this.buttonAdd.TabIndex = 1;
-            this.buttonAdd.Tag = "新增截图";
-            this.buttonAdd.UseVisualStyleBackColor = false;
-            this.buttonAdd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonAdd_MouseDown);
-            // 
             // pictureBoxOption
             // 
+            this.pictureBoxOption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxOption.BackColor = System.Drawing.SystemColors.Highlight;
             this.pictureBoxOption.Location = new System.Drawing.Point(0, 32);
             this.pictureBoxOption.Name = "pictureBoxOption";
-            this.pictureBoxOption.Size = new System.Drawing.Size(732, 47);
+            this.pictureBoxOption.Size = new System.Drawing.Size(798, 47);
             this.pictureBoxOption.TabIndex = 0;
             this.pictureBoxOption.TabStop = false;
             // 
             // tabControlPicture
             // 
+            this.tabControlPicture.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tabControlPicture.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControlPicture.Location = new System.Drawing.Point(0, 85);
             this.tabControlPicture.Name = "tabControlPicture";
             this.tabControlPicture.SelectedIndex = 0;
@@ -105,7 +87,6 @@ namespace FastSmallTools.ImageEdit
 
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.PictureBox pictureBoxOption;
-        private System.Windows.Forms.TabControl tabControlPicture;
-        private System.Windows.Forms.Button buttonAdd;
+        private FastSmallTools.CustomControl.CustomTabControl tabControlPicture;
     }
 }

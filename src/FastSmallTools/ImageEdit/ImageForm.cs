@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FastSmallTools.CustomControl;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,12 +16,14 @@ namespace FastSmallTools.ImageEdit
         #region 变量定义
         private ToolTip toolTip = new ToolTip();
 
-        #endregion // 变量定义
+        
 
         //声明事件委托  给主窗口传递参数 这里也可以直接将主窗口作为参数传到本窗口中
         public delegate void StateChangedEventHandler(object sender, int flag);
          //定义事件
          public event StateChangedEventHandler StateChanged;
+
+        #endregion // 变量定义
 
         #region 初始化
         public ImageForm(Bitmap bmp, String name = "name")
@@ -29,8 +32,18 @@ namespace FastSmallTools.ImageEdit
             //this.WindowState = FormWindowState.Maximized;  //使窗口启动时直接最大化
             ToolTipInit();
             AddNewPicture(bmp, name);
-           
+
+            tabControlPicture.AddButtonClick += new CustomTabControl.AddButtonClickDelegate(AddNewPictureEvent);//把事件绑定到自定义的委托上
+            tabControlPicture.ControlRemoved += TabControlPicture_ControlRemoved;
+
         }
+
+        private void TabControlPicture_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            //Console.WriteLine(e.Control.Text);
+            //Console.WriteLine(this.tabControlPicture.SelectedIndex.ToString()); 
+        }
+
         /// <summary>
         /// 提示初始化
         /// </summary>
@@ -42,7 +55,7 @@ namespace FastSmallTools.ImageEdit
             toolTip.ReshowDelay = 200;
 
             toolTip.ShowAlways = true;
-            toolTip.SetToolTip(this.buttonAdd, this.buttonAdd.Tag.ToString());
+
 
         }
         /// <summary>
@@ -78,7 +91,7 @@ namespace FastSmallTools.ImageEdit
 
             panel.Controls.Add(pictureBox);
             tabPage.Controls.Add(panel);
-            this.tabControlPicture.Controls.Add(tabPage);
+            this.tabControlPicture.TabPages.Add(tabPage);
             this.tabControlPicture.SelectedTab = tabPage;
 
             //Console.WriteLine(pictureBox.Size.ToString() + "   " + panel.Size.ToString() + "   " + tabPage.Size.ToString() + "   " + this.tabControlPicture.Size.ToString());
@@ -91,6 +104,14 @@ namespace FastSmallTools.ImageEdit
 
 
         }
+
+
+        public void AddNewPictureEvent(object sender, EventArgs e)
+        {
+            this.Hide();
+            StateChanged(this, 1);
+        }
+
         #endregion // 初始化
 
         #region 窗体事件
@@ -138,23 +159,6 @@ namespace FastSmallTools.ImageEdit
         }
         #endregion // 窗体事件
 
-        #region 按钮点击事件
-        /// <summary>
-        /// 按钮点击事件 - 新增截图
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonAdd_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)  // 单击鼠标左键
-            {
-                this.Hide();
-                StateChanged(this, 1);
-            }
-        }
-
-
-        #endregion // 按钮点击事件
 
     }
 }

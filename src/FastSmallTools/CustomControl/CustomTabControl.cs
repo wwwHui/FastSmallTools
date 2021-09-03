@@ -14,7 +14,10 @@ namespace FastSmallTools.CustomControl
 
         private Image closeIcon = null;
         private Image addIcon = null;
+        private TabPage addTab = new TabPage();
 
+        public delegate void AddButtonClickDelegate(object sender, EventArgs e);//建立委托
+        public AddButtonClickDelegate AddButtonClick;
 
         public CustomTabControl() : base()
         {
@@ -23,20 +26,13 @@ namespace FastSmallTools.CustomControl
             closeIcon = Properties.Resources.close;
             addIcon = Properties.Resources.add;
 
-            //Console.WriteLine(icon.Size.ToString());
-            //IconWOrH = icon.Width;
-            //IconWOrH = icon.Height;
+            string name = "新增";
+            addTab.Name = name;
+            addTab.Text = name;
+            this.Controls.Add(addTab);
+
         }
 
-        protected override void OnControlAdded(ControlEventArgs e)
-        {
-            base.OnControlAdded(e);
-
-            Rectangle rect = GetTabRect(this.Controls.Count-1);
-            rect.Offset(rect.Width - rect.Height, 0);
-            rect.Width = rect.Height;
-        
-        }
 
         private Rectangle GetCloseRect(int index)
         {
@@ -47,63 +43,73 @@ namespace FastSmallTools.CustomControl
             return rect;
         }
 
-        private Rectangle GetAddRect()
+        private Rectangle GetMouseRect(int index)
         {
-            Rectangle rect = GetTabRect(this.Controls.Count - 1);
-            rect.Offset(rect.Width - rect.Height, 0);
-            rect.Width = rect.Height;
-            Rectangle addRect = new Rectangle(rect.X + rect.Width, rect.Y, rect.Width, rect.Height);
-            return addRect;
+            if(index == 0)
+            {
+                return GetTabRect(0);
+            }
+            return GetCloseRect(index);
         }
-
-        
-
-        
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
+
             Graphics g = e.Graphics;
             Rectangle tabRect = GetTabRect(e.Index);
             Rectangle closeRect = GetCloseRect(e.Index);
 
             Brush color = Brushes.AliceBlue; //非选中项的背景色
-            if (e.Index == this.SelectedIndex)    //当前选中的Tab页，设置不同的样式以示选中
+
+            if (e.Index == 0)  // 增加按钮
             {
-                color = Brushes.SteelBlue; //选中项的背景色
+                g.FillRectangle(color, tabRect); //改变选项卡标签的背景色
+                string title = this.TabPages[e.Index].Text;
+                g.DrawString(title, this.Font, new SolidBrush(Color.Black), new PointF(tabRect.X+2, tabRect.Y + 5));//PointF选项卡标题的位置
+                g.DrawImage(addIcon, closeRect, 0, 0, addIcon.Width, addIcon.Height, GraphicsUnit.Pixel);
+
             }
-
-            g.FillRectangle(color, tabRect); //改变选项卡标签的背景色
-            string title = this.TabPages[e.Index].Text;
-            g.DrawString(title, this.Font, new SolidBrush(Color.Black), new PointF(tabRect.X, tabRect.Y + 5));//PointF选项卡标题的位置
-            g.DrawImage(closeIcon, closeRect, 0, 0, closeIcon.Width, closeIcon.Height, GraphicsUnit.Pixel);
-
-            if(e.Index == this.Controls.Count - 1)
+            else
             {
-                // 绘制增加按钮
-                Brush addColor = Brushes.Blue;
-                Rectangle addRect = GetAddRect();
-                //g.FillRectangle(addColor, addRect);
-                g.DrawImage(addIcon, addRect, 0, 0, addIcon.Width, addIcon.Height, GraphicsUnit.Pixel);
+                if (e.Index == this.SelectedIndex)    //当前选中的Tab页，设置不同的样式以示选中
+                {
+                    color = Brushes.SteelBlue; //选中项的背景色
+                }
+                g.FillRectangle(color, tabRect); //改变选项卡标签的背景色
+                string title = this.TabPages[e.Index].Text;
+                g.DrawString(title, this.Font, new SolidBrush(Color.Black), new PointF(tabRect.X+2, tabRect.Y + 5));//PointF选项卡标题的位置
+                g.DrawImage(closeIcon, closeRect, 0, 0, closeIcon.Width, closeIcon.Height, GraphicsUnit.Pixel);
             }
-
 
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
             Point point = e.Location;
-            Rectangle rect = GetCloseRect(this.SelectedIndex);
-            if (rect.Contains(point))
+            Rectangle rect;
+
+            if (this.SelectedIndex == 0)
             {
-                this.TabPages.RemoveAt(this.SelectedIndex);
+                rect = GetTabRect(0);
+                if (rect.Contains(point))
+                {
+                    AddButtonClick(null, e);
+                }
+            }
+            else
+            {
+                rect = GetCloseRect(this.SelectedIndex);
+                if (rect.Contains(point))
+                {
+                    this.TabPages.RemoveAt(this.SelectedIndex);
+                    if(this.SelectedIndex == this.TabCount)
+                    {
+                        this.SelectedIndex = this.TabCount - 1;
+                    }
+                }
             }
 
-            Rectangle addRect = GetAddRect();
-            if (addRect.Contains(point))
-            {
-                this.Cursor = Cursors.Hand;
-                return;
-            }
+
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -112,16 +118,10 @@ namespace FastSmallTools.CustomControl
 
             Point point = e.Location;
             this.Cursor = Cursors.Default;
-            Rectangle addRect = GetAddRect();
-            if (addRect.Contains(point))
-            {
-                this.Cursor = Cursors.Hand;
-                return;
-            }
 
             for (int i= 0; i<this.Controls.Count; i++)
             {
-                Rectangle rect = GetCloseRect(i);
+                Rectangle rect = GetMouseRect(i);
                 if (rect.Contains(point))
                 {
                     this.Cursor = Cursors.Hand;
