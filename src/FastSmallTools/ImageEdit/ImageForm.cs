@@ -16,8 +16,6 @@ namespace FastSmallTools.ImageEdit
         #region 变量定义
         private ToolTip toolTip = new ToolTip();
 
-        
-
         //声明事件委托  给主窗口传递参数 这里也可以直接将主窗口作为参数传到本窗口中
         public delegate void StateChangedEventHandler(object sender, int flag);
          //定义事件

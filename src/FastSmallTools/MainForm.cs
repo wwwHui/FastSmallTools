@@ -644,7 +644,7 @@ namespace FastSmallTools
         /// <param name="e"></param>
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.notifyIcon.Visible = false;  // 关闭托盘图标，不然打开托盘才会刷新消失
+            this.notifyIcon.Visible = false;  // 关闭托盘图标
         }
 
         #endregion // 窗口-最小化和关闭

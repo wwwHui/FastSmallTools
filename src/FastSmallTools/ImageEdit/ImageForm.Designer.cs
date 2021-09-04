@@ -29,6 +29,7 @@ namespace FastSmallTools.ImageEdit
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelMenu = new System.Windows.Forms.Panel();
             this.pictureBoxOption = new System.Windows.Forms.PictureBox();
             this.tabControlPicture = new FastSmallTools.CustomControl.CustomTabControl();
@@ -73,6 +74,7 @@ namespace FastSmallTools.ImageEdit
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControlPicture);
             this.Controls.Add(this.panelMenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImageForm";
             this.Text = "图片编辑器";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ImageForm_FormClosed);
