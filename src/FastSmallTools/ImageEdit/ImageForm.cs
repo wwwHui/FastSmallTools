@@ -78,12 +78,9 @@ namespace FastSmallTools.ImageEdit
             {
                 name = DateTime.Now.ToString("yyyyMMdd-hhmmssffff");
             }
-            if(!name.EndsWith("  "))
-            {
-                name = name + "  ";
-            }
+
             tabPage.Name = name;
-            tabPage.Text = name;
+            tabPage.Text = name + "  ";
             tabPage.Dock = DockStyle.Fill;  // 大小随父容器变化
 
 
@@ -155,7 +152,41 @@ namespace FastSmallTools.ImageEdit
                 
             }
         }
+
+
         #endregion // 窗体事件
+
+        #region 功能按钮 保存
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+
+            int index = this.tabControlPicture.SelectedIndex;
+            TabPage tabpage = this.tabControlPicture.TabPages[index];
+            Control panel = tabpage.Controls[0];
+            PictureBox pictureBox = (PictureBox)panel.Controls[0];
+            
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Png 图片|*.png|Jpg 图片|*.jpg|Bmp 图片|*.bmp|Gif 图片|*.gif|Wmf  图片|*.wmf";
+            sfd.FilterIndex = 0;
+            sfd.RestoreDirectory = true;  //保存对话框是否记忆上次打开的目录
+            sfd.CheckPathExists = true;  //检查目录
+            sfd.FileName = tabpage.Name;//设置默认文件名
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                //MessageBox.Show(sfd.FileName.ToString());
+                pictureBox.Image.Save(sfd.FileName);
+                //image.Save(savedialog.FileName, System.Drawing.Imaging.ImageFormat.Jpeg);// image为要保存的图片
+            }
+            else
+            {
+                //MessageBox.Show("取消保存");
+                return;
+            }
+        }
+
+        #endregion // 功能按钮 保存
 
 
     }

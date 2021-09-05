@@ -29,10 +29,10 @@ namespace FastSmallTools.ImageEdit
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panelMenu = new System.Windows.Forms.Panel();
             this.pictureBoxOption = new System.Windows.Forms.PictureBox();
             this.tabControlPicture = new FastSmallTools.CustomControl.CustomTabControl();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOption)).BeginInit();
             this.SuspendLayout();
@@ -40,6 +40,7 @@ namespace FastSmallTools.ImageEdit
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panelMenu.Controls.Add(this.buttonSave);
             this.panelMenu.Controls.Add(this.pictureBoxOption);
             this.panelMenu.Location = new System.Drawing.Point(1, 0);
             this.panelMenu.Name = "panelMenu";
@@ -67,6 +68,16 @@ namespace FastSmallTools.ImageEdit
             this.tabControlPicture.Size = new System.Drawing.Size(799, 364);
             this.tabControlPicture.TabIndex = 1;
             // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(22, 43);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(62, 35);
+            this.buttonSave.TabIndex = 1;
+            this.buttonSave.Text = "保存";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
             // ImageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -74,7 +85,6 @@ namespace FastSmallTools.ImageEdit
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControlPicture);
             this.Controls.Add(this.panelMenu);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImageForm";
             this.Text = "图片编辑器";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ImageForm_FormClosed);
@@ -90,5 +100,6 @@ namespace FastSmallTools.ImageEdit
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.PictureBox pictureBoxOption;
         private FastSmallTools.CustomControl.CustomTabControl tabControlPicture;
+        private System.Windows.Forms.Button buttonSave;
     }
 }
